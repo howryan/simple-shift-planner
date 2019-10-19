@@ -1,0 +1,74 @@
+<h4>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-5">
+        <button type="button" class="btn btn-light btn-sm" (click)="sidenav.toggle();">
+          <i class="fas fa-bars"></i>
+        </button>
+        Personaleinsatzplan B&B
+      </div>
+      <div class="col-md-7">
+        <span>KW
+          <select [ngModel]="selectedWeekNumber" (change)="initializePlan($event.target.value)">
+            <option *ngFor="let weeknumber of weekNumbers" [value]="weeknumber">
+              {{weeknumber}}
+            </option>
+          </select>
+        </span>
+        <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="refreshNames();"><i class="fas fa-redo-alt"></i>&nbsp; Namen aktualisieren</button>
+        <!-- <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="storeCurrentWeek();">Speichern</button>
+        <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="downloadEmployeeShiftWeek();">Exportieren</button>
+        <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="importEmployeeShiftWeekFile();">Importieren</button>
+        <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="resetShiftData();">Löschen</button> -->
+      </div>
+    </div>
+  </div>
+</h4>
+
+<!--
+<div *ngIf="expandImportFileSection" class="d-flex h-100">
+  <div class="m-auto">
+    <form>
+      <div class="form-group mb-0">
+        <input type="file" class="form-control-file" id="formControlFile1" accept=".json,.txt">
+      </div>
+    </form>
+  </div>
+</div>
+ -->
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th *ngFor="let columnHeaderKey of getColumnKeys()" (click)="sortColumns(columnHeaderKey, sortAsc)">
+        <u>{{displayedColumns[columnHeaderKey]}}</u>
+      </th>
+    </tr>
+  </thead>
+  <tr class="table-light">
+    <td>
+      <span></span>
+    </td>
+    <td *ngFor="let dayOfWeek of daysOfWeek">
+      <span>{{dayOfWeek | date: 'dd.MM.yyyy' }}</span>
+    </td>
+  </tr>
+
+  <tr *ngFor="let employeeRow of employeeShiftRows">
+    <td *ngFor="let day of employeeKeys; index as j" [ngClass]="{'disabledColumn':  isPublicHoliday(j)}">
+      <span *ngIf="j == 0">{{employeeRow.name}}</span>
+      <select *ngIf="j > 0" [(ngModel)]="employeeRow[day]" (change)="storeCurrentWeek()" class="custom-select custom-select mb-3" [attr.disabled] = "isPublicHoliday(j) ? 'disabled' : null">
+        <option *ngFor="let shift of shifts" [value]="shift.value">
+          {{shift.value}}
+        </option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td *ngFor="let day of employeeKeys; index as j">
+      <span *ngIf="j > 0"></span>
+    </td>
+  </tr>
+
+</table>
