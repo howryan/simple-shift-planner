@@ -4,6 +4,7 @@ import {EmployeeRow, EmployeeRowInterface} from './employee';
 import {Shift} from "./shift";
 import {ShifttableComponent} from "../shifttable/shifttable.component";
 
+// Only german NRW public holiday days: TODO: Import & Export functionality
 const PUBLIC_HOLIDAY_DAYS: string[] = [
   '01.01.2019', '19.04.2019', '22.04.2019', '01.05.2019', '30.05.2019', '10.06.2019', '20.06.2019', '03.10.2019', '01.11.2019', '25.12.2019', '26.12.2019', '01.01.2020', '10.04.2020', '13.04.2020',
   '01.05.2020', '21.05.2020', '01.06.2020', '11.06.2020', '03.10.2020', '01.11.2020', '25.12.2020', '26.12.2020', '01.01.2021', '06.01.2021', '08.03.2021', '02.04.2021', '04.04.2021', '05.04.2021',
@@ -253,10 +254,32 @@ export class ShiftTableService {
     this.shiftTableComponent = shiftTableComponent;
   }
 
-  initializeStatisticalBottomData(): any {
-    let statisticalDataObject = {}
-    const columnKeys = Object.keys(this.getColumnTitles())
+  loadStatisticalBottomData(): any {
+    let statisticalDataObject = this.refreshStatisticalBottomData();
 
+    let employeeDataRows = this.getEmployeeDataRows();
+
+    //Load the data from the actual plan into the statistical data rows
+    for(let employeeDataRow of employeeDataRows){
+      for(let weekDayName of  Object.keys(statisticalDataObject)){
+        //Check if the employee has a time or a status (e.g. vacation) for the day
+        if(employeeDataRow[weekDayName]){
+          //Check if the time or status already exist for the day and iterate - otherwise create with value 1
+          if(!statisticalDataObject[weekDayName][employeeDataRow[weekDayName]]){
+            statisticalDataObject[weekDayName][employeeDataRow[weekDayName]] = 1;
+          } else {
+            statisticalDataObject[weekDayName][employeeDataRow[weekDayName]] += 1;
+          }
+        }
+      }
+    }
+    return statisticalDataObject;
+  }
+
+  refreshStatisticalBottomData(): any {
+    let statisticalDataObject = {};
+    const columnKeys = Object.keys(this.getColumnTitles());
+    //Initialize statistical data object
     for(let columnKey of columnKeys){
       //Just take the weekdays not the name-column
       if(columnKey != columnKeys[0]){
@@ -264,12 +287,6 @@ export class ShiftTableService {
       }
     }
     return statisticalDataObject;
-  }
-
-  refreshStatisticalBottomData(statisticalBottomData: any): any {
-    //add time if not already exists
-    //if time exists then iterate
-    return {};
   }
 
 }

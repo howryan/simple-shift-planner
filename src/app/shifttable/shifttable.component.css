@@ -13,8 +13,7 @@
 }
 
 .table td {
-    padding: 4px;
-    padding-left: 20px;
+  padding: 4px 4px 4px 20px;
 }
 
 .custom-select.mb-3{
@@ -49,4 +48,8 @@ h4 {
 
 .disabledColumn {
     background-color: lightgray;
+}
+
+#statisticalBottomDataRow {
+  font-size: 14px;
 }

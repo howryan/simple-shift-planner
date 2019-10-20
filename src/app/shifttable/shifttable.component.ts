@@ -39,8 +39,6 @@ export class ShifttableComponent implements OnInit {
     this.shiftTableService.initializePlan(this.selectedWeekNumber);
     this.weekNumbers = this.shiftTableService.getFutureWeekNumbers();
 
-    this.statisticalBottomData  = this.shiftTableService.initializeStatisticalBottomData();
-
     this.sortAsc = true;
     this.expandImportFileSection = false;
   }
@@ -51,6 +49,7 @@ export class ShifttableComponent implements OnInit {
     this.holidayDaysIndex = this.shiftTableService.getPublicHolidayIndex(this.daysOfWeek);
     this.refreshStatisticalBottomData();
     this.loadEmployeeKeys();
+    this.statisticalBottomData  = this.shiftTableService.loadStatisticalBottomData();
   }
 
   loadEmployeeKeys(){
@@ -103,12 +102,16 @@ export class ShifttableComponent implements OnInit {
     return this.selectedWeekNumber;
   }
 
-  refreshStatisticalBottomData(): void {
-    this.shiftTableService.refreshStatisticalBottomData(this.statisticalBottomData);
-  }
-
   initializePlan(event): void {
     this.shiftTableService.initializePlan(event);
+  }
+
+  refreshStatisticalBottomData(): void {
+    this.statisticalBottomData = this.shiftTableService.refreshStatisticalBottomData();
+  }
+
+  getStatisticalBottomDataKeys(weekday: string): Array<string> {
+    return Object.keys(this.statisticalBottomData[weekday]).sort((one, two) => (one < two ? -1 : 1));
   }
 
   //Not used

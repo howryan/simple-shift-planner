@@ -153,9 +153,6 @@ export class SidenavComponentImportExportDialog implements OnInit{
     } catch (e) {
       this.showError = true;
     }
-
-    //2. Load JSON into local storage depending on type
-
   }
 
   importPlanData(parsedJSON: any): void {

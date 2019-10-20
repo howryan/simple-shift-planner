@@ -16,26 +16,10 @@
           </select>
         </span>
         <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="refreshNames();"><i class="fas fa-redo-alt"></i>&nbsp; Namen aktualisieren</button>
-        <!-- <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="storeCurrentWeek();">Speichern</button>
-        <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="downloadEmployeeShiftWeek();">Exportieren</button>
-        <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="importEmployeeShiftWeekFile();">Importieren</button>
-        <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="resetShiftData();">Löschen</button> -->
       </div>
     </div>
   </div>
 </h4>
-
-<!--
-<div *ngIf="expandImportFileSection" class="d-flex h-100">
-  <div class="m-auto">
-    <form>
-      <div class="form-group mb-0">
-        <input type="file" class="form-control-file" id="formControlFile1" accept=".json,.txt">
-      </div>
-    </form>
-  </div>
-</div>
- -->
 
 <table class="table table-striped">
   <thead>
@@ -65,9 +49,13 @@
     </td>
   </tr>
 
-  <tr>
+  <tr id="statisticalBottomDataRow">
     <td *ngFor="let day of employeeKeys; index as j">
-      <span *ngIf="j > 0"></span>
+      <div *ngIf="j > 0">
+        <div *ngFor="let time of getStatisticalBottomDataKeys(day)">
+          {{time}}: {{statisticalBottomData[day][time]}}X
+        </div>
+      </div>
     </td>
   </tr>
 

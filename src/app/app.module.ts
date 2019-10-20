@@ -4,9 +4,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
-import { ShifttableComponent } from './shifttable/shifttable.component';
-import { ShiftTableService } from './shared/shifttable.service';
-import { SidenavComponent, SidenavComponentImportExportDialog } from './sidenav/sidenav.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -45,6 +42,10 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
+
+import { ShifttableComponent } from './shifttable/shifttable.component';
+import { ShiftTableService } from './shared/shifttable.service';
+import { SidenavComponent, SidenavComponentImportExportDialog } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
