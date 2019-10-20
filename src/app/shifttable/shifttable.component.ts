@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import {ShiftTableService} from '../shared/shifttable.service';
 import { EmployeeRow } from '../shared/employee';
 import {Shift} from "../shared/shift";
+import html2canvas from "html2canvas";
 
 @Component({
   selector: 'app-shifttable',
@@ -12,6 +13,9 @@ import {Shift} from "../shared/shift";
 export class ShifttableComponent implements OnInit {
 
   @Input() sidenav;
+
+  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('downloadLink') downloadLink: ElementRef;
 
   displayedColumns: EmployeeRow;
   shifts: Shift[];
@@ -130,6 +134,15 @@ export class ShifttableComponent implements OnInit {
   //Not used
   importEmployeeShiftWeekFile() {
     this.expandImportFileSection = !this.expandImportFileSection;
+  }
+
+  takeScreenShot(){
+    html2canvas(document.body).then(canvas => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
+      this.downloadLink.nativeElement.download = 'marble-diagram.png';
+      this.downloadLink.nativeElement.click();
+    });
   }
 
 }

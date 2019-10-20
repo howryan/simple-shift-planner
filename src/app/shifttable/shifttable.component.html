@@ -15,7 +15,8 @@
             </option>
           </select>
         </span>
-        <button type="button" class="btn btn-dark btn-sm headerButtons" (click)="refreshNames();"><i class="fas fa-redo-alt"></i>&nbsp; Namen aktualisieren</button>
+        <button type="button" class="btn btn-dark btn-sm headerButtons no-print" (click)="refreshNames();"><i class="fas fa-redo-alt"></i>&nbsp; Namen aktualisieren</button>
+        <button type="button" class="btn btn-dark btn-sm headerButtons no-print" (click)="takeScreenShot();"><i class="fas fa-redo-alt"></i> Screenshot</button>
       </div>
     </div>
   </div>
@@ -49,9 +50,9 @@
     </td>
   </tr>
 
-  <tr id="statisticalBottomDataRow">
+  <tr id="statisticalBottomDataRow" class="no-print">
     <td *ngFor="let day of employeeKeys; index as j">
-      <div *ngIf="j > 0">
+      <div *ngIf="j > 0" class="alert alert-dark" role="alert">
         <div *ngFor="let time of getStatisticalBottomDataKeys(day)">
           {{time}}: {{statisticalBottomData[day][time]}}X
         </div>
@@ -60,3 +61,8 @@
   </tr>
 
 </table>
+
+<div id="download">
+  <img #canvas>
+  <a #downloadLink></a>
+</div>
