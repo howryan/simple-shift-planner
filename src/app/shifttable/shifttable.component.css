@@ -53,3 +53,7 @@ h4 {
 #statisticalBottomDataRow {
   font-size: 14px;
 }
+
+#download {
+  display: none;
+}
