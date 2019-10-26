@@ -32,7 +32,7 @@ export class SidenavComponent implements OnInit {
   IMPORT: ImpExType;
   EXPORT: ImpExType;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private shiftTableService: ShiftTableService) {
     this.actionTypes = elementTypes;
     this.IMPORT = ImpExType.Import;
     this.EXPORT = ImpExType.Export;
@@ -53,6 +53,11 @@ export class SidenavComponent implements OnInit {
     });
   }
 
+  refreshNamesAfterNameImport(){
+    this.shiftTableService.refreshNamesAfterNameImport();
+    this.sidenav.toggle();
+  }
+
 }
 
 
@@ -67,7 +72,7 @@ export class SidenavComponentImportExportDialog implements OnInit{
   IMPORT: ImpExType = ImpExType.Import;
   EXPORT: ImpExType = ImpExType.Export;
   exportData: String;
-  @ViewChild('exportText') exportTextElement;
+  @ViewChild('exportText', { static: false }) exportTextElement;
 
   constructor(
     public dialogRef: MatDialogRef<SidenavComponentImportExportDialog>, @Inject(MAT_DIALOG_DATA) public data: ImportExportDialogData, private shiftTableService: ShiftTableService) {

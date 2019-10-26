@@ -44,6 +44,7 @@ h4 {
 .headerButtons {
     position: relative;
     top: -5px;
+    margin-left: 5px;
 }
 
 .disabledColumn {
@@ -54,6 +55,11 @@ h4 {
   font-size: 14px;
 }
 
-#download {
+#statisticalBottomDataRow .alert {
+  padding: 10px;
+  min-width: 125px;
+}
+
+#downloadScreenshot {
   display: none;
 }

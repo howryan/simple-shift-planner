@@ -113,6 +113,12 @@ export class ShiftTableService {
     console.log(EMPLOYEE_DATA_ROWS);
   }
 
+  refreshNamesAfterNameImport(): void {
+    this.refreshNames();
+    this.shiftTableComponent.loadEmployeeKeys();
+    this.shiftTableComponent.storeCurrentWeek();
+  }
+
 
   private createEmptyWeek(): EmployeeRow[]{
     if(localStorage.getItem(NAMES_KEY_LS))
@@ -255,7 +261,7 @@ export class ShiftTableService {
   }
 
   loadStatisticalBottomData(): any {
-    let statisticalDataObject = this.refreshStatisticalBottomData();
+    let statisticalDataObject = this.resetStatisticalBottomData();
 
     let employeeDataRows = this.getEmployeeDataRows();
 
@@ -276,7 +282,7 @@ export class ShiftTableService {
     return statisticalDataObject;
   }
 
-  refreshStatisticalBottomData(): any {
+  resetStatisticalBottomData(): any {
     let statisticalDataObject = {};
     const columnKeys = Object.keys(this.getColumnTitles());
     //Initialize statistical data object

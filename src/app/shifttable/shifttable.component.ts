@@ -14,8 +14,8 @@ export class ShifttableComponent implements OnInit {
 
   @Input() sidenav;
 
-  @ViewChild('canvas') canvas: ElementRef;
-  @ViewChild('downloadLink') downloadLink: ElementRef;
+  @ViewChild('canvas', { static: false }) canvas: ElementRef;
+  @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
 
   displayedColumns: EmployeeRow;
   shifts: Shift[];
@@ -51,9 +51,9 @@ export class ShifttableComponent implements OnInit {
     this.selectedWeekNumber = selectedWeekNumber;
     this.daysOfWeek = this.shiftTableService.getDaysOfWeek(this.selectedWeekNumber);
     this.holidayDaysIndex = this.shiftTableService.getPublicHolidayIndex(this.daysOfWeek);
-    this.refreshStatisticalBottomData();
+    this.resetStatisticalBottomData();
     this.loadEmployeeKeys();
-    this.statisticalBottomData  = this.shiftTableService.loadStatisticalBottomData();
+    this.loadStatisticalBottomData();
   }
 
   loadEmployeeKeys(){
@@ -94,12 +94,11 @@ export class ShifttableComponent implements OnInit {
 
   storeCurrentWeek() {
     localStorage.setItem(new Date().getFullYear() + "-" + this.selectedWeekNumber.toString(), JSON.stringify(this.employeeShiftRows));
+    this.loadStatisticalBottomData();
   }
 
   refreshNames(){
-    this.shiftTableService.refreshNames();
-    this.loadEmployeeKeys();
-    this.storeCurrentWeek();
+    this.shiftTableService.refreshNamesAfterNameImport();
   }
 
   getSelectedWeekNumber(): number {
@@ -110,12 +109,16 @@ export class ShifttableComponent implements OnInit {
     this.shiftTableService.initializePlan(event);
   }
 
-  refreshStatisticalBottomData(): void {
-    this.statisticalBottomData = this.shiftTableService.refreshStatisticalBottomData();
+  resetStatisticalBottomData(): void {
+    this.statisticalBottomData = this.shiftTableService.resetStatisticalBottomData();
   }
 
   getStatisticalBottomDataKeys(weekday: string): Array<string> {
     return Object.keys(this.statisticalBottomData[weekday]).sort((one, two) => (one < two ? -1 : 1));
+  }
+
+  loadStatisticalBottomData() {
+    this.statisticalBottomData = this.shiftTableService.loadStatisticalBottomData();
   }
 
   //Not used
@@ -137,12 +140,16 @@ export class ShifttableComponent implements OnInit {
   }
 
   takeScreenShot(){
-    html2canvas(document.body).then(canvas => {
+    let html2canvasOptions = {
+      windowWidth: 1300,
+      windowHeight: 970
+    };
+
+    html2canvas(document.body, html2canvasOptions).then(canvas => {
       this.canvas.nativeElement.src = canvas.toDataURL();
       this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
       this.downloadLink.nativeElement.download = 'marble-diagram.png';
       this.downloadLink.nativeElement.click();
     });
   }
-
 }

@@ -15,8 +15,7 @@
             </option>
           </select>
         </span>
-        <button type="button" class="btn btn-dark btn-sm headerButtons no-print" (click)="refreshNames();"><i class="fas fa-redo-alt"></i>&nbsp; Namen aktualisieren</button>
-        <button type="button" class="btn btn-dark btn-sm headerButtons no-print" (click)="takeScreenShot();"><i class="fas fa-redo-alt"></i> Screenshot</button>
+        <button type="button" class="btn btn-dark btn-sm headerButtons no-print" (click)="takeScreenShot();"><i class="fas fa-table"></i> Bild herunterladen</button>
       </div>
     </div>
   </div>
@@ -62,7 +61,7 @@
 
 </table>
 
-<div id="download">
+<div id="downloadScreenshot">
   <img #canvas>
   <a #downloadLink></a>
 </div>
