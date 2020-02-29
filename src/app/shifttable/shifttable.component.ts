@@ -142,7 +142,9 @@ export class ShifttableComponent implements OnInit {
   takeScreenShot(){
     let html2canvasOptions = {
       windowWidth: 1300,
-      windowHeight: 970
+      windowHeight: 970,
+      width: 1300,
+      height: 970
     };
 
     html2canvas(document.body, html2canvasOptions).then(canvas => {

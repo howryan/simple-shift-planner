@@ -1,15 +1,10 @@
 <h4>Menu</h4>
 
-<h5 class="bg-dark text-light">Importieren</h5>
-<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[0], 'Wochenplan importieren', IMPORT)">Plan importieren</button>
-<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[1], 'Namen importieren', IMPORT)">Namen importieren</button>
-<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[2], 'Zeiten importieren', IMPORT)">Zeiten importieren</button>
-<button type="button" class="btn btn-light" (click)="refreshNamesAfterNameImport()">Namen aktualisieren</button>
-
-<h5 class="bg-dark text-light">Exportieren</h5>
-<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[0], 'Wochenplan Export', EXPORT)">Plan exportieren</button>
-<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[1], 'Namen Export', EXPORT)">Namen exportieren</button>
-<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[2], 'Zeiten Export', EXPORT)">Zeiten exportieren</button>
+<h5 class="bg-dark text-light">Daten bearbeiten</h5>
+<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[1], 'Namen bearbeiten')">Namen bearbeiten</button>
+<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[2], 'Zeiten bearbeiten')">Zeiten bearbeiten</button>
+<button type="button" class="btn btn-light" (click)="openImportExportDialog(actionTypes[0], 'Plan bearbeiten')">Plan bearbeiten</button>
+<!-- <button type="button" class="btn btn-light" (click)="refreshNamesAfterNameImport()">Namen aktualisieren</button> -->
 
 <h5 class="bg-dark text-light">Einstellungen</h5>
 <button type="button" class="btn btn-light" (click)="this.sidenav.toggle()">Schließen</button>

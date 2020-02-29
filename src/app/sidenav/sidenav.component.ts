@@ -7,11 +7,6 @@ import {Shift, ShiftInterface} from "../shared/shift";
 export interface ImportExportDialogData {
   elementType: ImpExElementType;
   title: string;
-  impexType: ImpExType;
-}
-enum ImpExType {
-  Import,
-  Export,
 }
 enum ImpExElementType {
   Plan,
@@ -29,22 +24,18 @@ export class SidenavComponent implements OnInit {
 
   @Input() sidenav;
   actionTypes: ImpExElementType[];
-  IMPORT: ImpExType;
-  EXPORT: ImpExType;
 
   constructor(public dialog: MatDialog, private shiftTableService: ShiftTableService) {
     this.actionTypes = elementTypes;
-    this.IMPORT = ImpExType.Import;
-    this.EXPORT = ImpExType.Export;
   }
 
   ngOnInit() {
   }
 
-  openImportExportDialog(elementType: ImpExElementType, title: String, impexType: ImpExType) {
+  openImportExportDialog(elementType: ImpExElementType, title: String) {
     const dialogRef = this.dialog.open(SidenavComponentImportExportDialog, {
       width: '75%',
-      data: {elementType: elementType, title: title, impexType: impexType}
+      data: {elementType: elementType, title: title}
     });
 
     //Does nothing. Just to show an API example method
@@ -69,9 +60,6 @@ export class SidenavComponent implements OnInit {
 export class SidenavComponentImportExportDialog implements OnInit{
   inputData: String;
   showError: Boolean;
-  IMPORT: ImpExType = ImpExType.Import;
-  EXPORT: ImpExType = ImpExType.Export;
-  exportData: String;
   @ViewChild('exportText', { static: false }) exportTextElement;
 
   constructor(
@@ -79,16 +67,14 @@ export class SidenavComponentImportExportDialog implements OnInit{
   }
 
   ngOnInit() {
-    if(this.data.impexType === this.EXPORT){
-      if(this.data.elementType === ImpExElementType.Plan) {
-        this.exportData = this.createExportPlanData();
-      }
-      else if(this.data.elementType === ImpExElementType.Employees) {
-        this.exportData = this.createExportListData(NAMES_KEY_LS);
-      }
-      else if(this.data.elementType === ImpExElementType.Times) {
-        this.exportData = this.createExportListData(TIMES_KEY_LS);
-      }
+    if(this.data.elementType === ImpExElementType.Plan) {
+      this.inputData = this.createExportPlanData();
+    }
+    else if(this.data.elementType === ImpExElementType.Employees) {
+      this.inputData = this.createExportListData(NAMES_KEY_LS);
+    }
+    else if(this.data.elementType === ImpExElementType.Times) {
+      this.inputData = this.createExportListData(TIMES_KEY_LS);
     }
   }
 
@@ -141,18 +127,17 @@ export class SidenavComponentImportExportDialog implements OnInit{
       let input: string = this.inputData.toString();
 
       //A. Import plan
-      if(this.data.impexType === this.IMPORT){
-        if(this.data.elementType === ImpExElementType.Plan) {
-          let parsedJSON = JSON.parse(input);
-          this.importPlanData(parsedJSON);
-        }
-        else if(this.data.elementType === ImpExElementType.Employees) {
-          this.importNames(input);
-        }
-        else if(this.data.elementType === ImpExElementType.Times) {
-          this.importShifts(input)
-        }
+      if(this.data.elementType === ImpExElementType.Plan) {
+        let parsedJSON = JSON.parse(input);
+        this.importPlanData(parsedJSON);
       }
+      else if(this.data.elementType === ImpExElementType.Employees) {
+        this.importNames(input);
+      }
+      else if(this.data.elementType === ImpExElementType.Times) {
+        this.importShifts(input)
+      }
+
 
       this.dialogRef.close();
     } catch (e) {

@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>{{data.title}}</h2>
 
-<div *ngIf="data.impexType == IMPORT">
+<div>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <textarea matInput placeholder="Hier einfügen" rows="15" [(ngModel)]="inputData"></textarea>
+      <textarea matInput rows="15" [(ngModel)]="inputData"></textarea>
     </mat-form-field>
     <div class="alert alert-danger" role="alert" *ngIf="showError">
       Fehler beim einlesen der Daten!
@@ -12,21 +12,6 @@
 
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Abbrechen</button>
-    <button mat-button (click)="importData()">Importieren</button>
-  </mat-dialog-actions>
-</div>
-
-<div *ngIf="data.impexType == EXPORT">
-  <mat-dialog-content class="mat-typography">
-    <br>
-    <mat-card>
-      <span #exportText >{{exportData}}</span>
-    </mat-card>
-    <br>
-  </mat-dialog-content>
-
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Schließen</button>
-    <button mat-button (click)="copyToClipboard()">Kopieren</button>
+    <button mat-button (click)="importData()">Speichern</button>
   </mat-dialog-actions>
 </div>
