@@ -14,6 +14,12 @@ enum ImpExElementType {
   Times
 }
 const elementTypes: ImpExElementType[] = [ImpExElementType.Plan, ImpExElementType.Employees, ImpExElementType.Times];
+const infoTextEmployees = "Bitte geben Sie die Namen der Mitarbeiter ein und trennen sie diese mit einem Komma. Beispiel:<br> " +
+  "<b>Max,Erika,Maria,Sabine</b> <br> Falls bereits Daten vorhanden sind, können Namen aus der angezeigten Auflistung hinzugefügt oder entfernt werden.";
+const infoTextTimes = "Bitte geben Sie die Zeiträume (oder Bezeichnungen) der Schichten ein und trennen sie diese mit einem Komma. Beispiel:<br> " +
+  "<b>05:45-14:00,07:00-15:00,12:00-20:30,Urlaub,Schule</b> <br> Falls bereits Daten vorhanden sind, können Schichten aus der angezeigten Auflistung hinzugefügt oder entfernt werden.";
+const infoTextPlan = "Die angezeigten Daten beinhalten alle Informationen der gerade angezeigten Woche (d.h. alle Schichten und Namen). " +
+  "Um die Daten dieser Woche auf ein anderes Gerät zu übertragen, kann der angezeigte Inhalt kopiert und auf dem anderen Gerät eingefügt werden.";
 
 @Component({
   selector: 'app-sidenav',
@@ -57,24 +63,32 @@ export class SidenavComponent implements OnInit {
   templateUrl: 'dialogs/sidenav.component.importdialog.html',
   styles: ['mat-form-field { width: 100%;}']
 })
-export class SidenavComponentImportExportDialog implements OnInit{
+export class SidenavComponentImportExportDialog implements OnInit {
   inputData: String;
   showError: Boolean;
-  @ViewChild('exportText', { static: false }) exportTextElement;
+  showInfo: Boolean;
+  @ViewChild('exportText', {static: false})
+  exportTextElement;
+  infoText: String;
 
   constructor(
     public dialogRef: MatDialogRef<SidenavComponentImportExportDialog>, @Inject(MAT_DIALOG_DATA) public data: ImportExportDialogData, private shiftTableService: ShiftTableService) {
   }
 
   ngOnInit() {
+    this.showInfo = true;
+
     if(this.data.elementType === ImpExElementType.Plan) {
       this.inputData = this.createExportPlanData();
+      this.infoText = infoTextPlan;
     }
     else if(this.data.elementType === ImpExElementType.Employees) {
       this.inputData = this.createExportListData(NAMES_KEY_LS);
+      this.infoText = infoTextEmployees;
     }
     else if(this.data.elementType === ImpExElementType.Times) {
       this.inputData = this.createExportListData(TIMES_KEY_LS);
+      this.infoText = infoTextTimes;
     }
   }
 

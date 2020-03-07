@@ -3,6 +3,9 @@
 <div>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
+      <div class="alert alert-info" role="alert" *ngIf="showInfo" [innerHTML]="infoText">
+      </div>
+      <br>
       <textarea matInput rows="15" [(ngModel)]="inputData"></textarea>
     </mat-form-field>
     <div class="alert alert-danger" role="alert" *ngIf="showError">
