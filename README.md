@@ -13,6 +13,14 @@ The idea was to create a simple application for very small companies or departme
 * Simple design with Bootstrap 4
 * Optimized frontend for printing: white background and black or dark grey text
 
+**Live demo & test data:**
+* The latest version of the project is published at https://howryan.github.io/simple-shift-planner/
+* Test data can be imported/inserted in the side menu of the running web application
+* Test data for names:
+    * `Max, Erika, John, Jane`
+* Test data for shifts:
+    * `05:45-14:00,12:00-20:30,Vacation,School`
+
 **ToDos:**
 * Replace hard coded public holidays by integrating an input field which stores the public holidays like the names and time ranges in the local storage
 * Replace hard coded german words and texts by the angular localization feature
