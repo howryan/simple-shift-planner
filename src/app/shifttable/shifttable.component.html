@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-light btn-sm" (click)="sidenav.toggle();">
           <i class="fas fa-bars"></i>
         </button>
-        Personaleinsatzplan B&B
+        Personaleinsatzplan
       </div>
       <div class="col-md-7">
         <span>KW
@@ -37,7 +37,6 @@
       <span>{{dayOfWeek | date: 'dd.MM.yyyy' }}</span>
     </td>
   </tr>
-
   <tr *ngFor="let employeeRow of employeeShiftRows">
     <td *ngFor="let day of employeeKeys; index as j" [ngClass]="{'disabledColumn':  isPublicHoliday(j)}">
       <span *ngIf="j == 0">{{employeeRow.name}}</span>
@@ -60,6 +59,11 @@
   </tr>
 
 </table>
+
+<div class="alert alert-primary m-3" *ngIf="employeeShiftRows.length == 0">
+  Keine Daten vorhanden. Bitte links das Menü öffnen und Namen eingeben.
+</div>
+
 
 <div id="downloadScreenshot">
   <img #canvas>
